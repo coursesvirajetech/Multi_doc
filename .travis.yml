@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+  
+before_install:
+  - docker build -t coursesvirajetech/react-test -f ./client/Dockerfile.dev ./client
+   
+   
+script:
+  - docker run coursesvirajetech/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t coursesvirajetech/multi-client ./client
+  - docker build -t coursesvirajetech/multi-nginx ./nginx
+  - docker build -t coursesvirajetech/multi-server ./server
+  - docker build -t coursesvirajetech/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push coursesvirajetech/multi-client
+  - docker push coursesvirajetech/multi-nginx
+  - docker push coursesvirajetech/multi-server
+  - docker push coursesvirajetech/multi-worker
