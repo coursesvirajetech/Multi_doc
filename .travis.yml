@@ -21,3 +21,17 @@ after_success:
   - docker push coursesvirajetech/multi-nginx
   - docker push coursesvirajetech/multi-server
   - docker push coursesvirajetech/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-east-1-503506962302
+  bucket_path: docker_multi
+
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
