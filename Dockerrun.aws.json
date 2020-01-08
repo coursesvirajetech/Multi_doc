@@ -1,13 +1,7 @@
 {
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
-    {
-      "name": "client",
-      "image": "coursesvirajetech/multi-client",
-      "hostname": "client",
-      "essential": false,
-      "memory": 128
-    },
+    
     {
       "name": "server",
       "image": "coursesvirajetech/multi-server",
@@ -33,7 +27,7 @@
           "containerPort": 80
         }
       ],
-      "links": ["client", "server"],
+      "links": ["server", "worker"],
       "memory": 128
     }
   ]
